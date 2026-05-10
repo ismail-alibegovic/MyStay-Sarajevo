@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Accommodation {
+  id                String             @id @default(uuid())
+  name              String
+  description       String
+  summary           String?
+  type              String
+  rating            Float              @default(0.0)
+  reviewsCount      Int                @default(0)
+  priceLevel        Int                @default(1)
+  basePrice         Float?
+  imageUrl          String?
+  coverImageUrl     String?
+  bookingUrl        String
+  bookingComId      String?            // Booking.com hotel ID for affiliate links (e.g., "hotel-europe")
+  // affiliateUrl computed via buildBookingUrl() in lib/affiliate.ts
+  slug              String             @unique
+  latitude          Float?
+  longitude         Float?
+  isPremium         Boolean            @default(false)
+  isFeatured        Boolean            @default(false)
+  typeId            String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  
+  accommodationType AccommodationType? @relation(fields: [typeId], references: [id])
+  locationTags      LocationTag[]      @relation("AccommodationToTags")
+  amenities         Amenity[]          @relation("AccommodationToAmenities")
+  reviews           Review[]
+
+  @@index([type])
+  @@index([priceLevel])
+  @@index([typeId])
+  @@index([slug])
+  @@index([bookingComId])
+}
+
+model Review {
+  id              String        @id @default(uuid())
+  userId          String
+  userName        String
+  userPhoto       String?
+  rating          Int
+  comment         String
+  accommodationId String
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  accommodation   Accommodation @relation(fields: [accommodationId], references: [id])
+
+  @@index([accommodationId])
+  @@index([userId])
+}
+
+model AccommodationType {
+  id             String          @id @default(uuid())
+  name           String          @unique
+  slug           String          @unique
+  description    String?
+  icon           String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  accommodations Accommodation[]
+}
+
+model LocationTag {
+  id             String          @id @default(uuid())
+  name           String          @unique
+  slug           String          @unique
+  description    String?
+  icon           String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  accommodations Accommodation[] @relation("AccommodationToTags")
+}
+
+model Amenity {
+  id             String          @id @default(uuid())
+  name           String          @unique
+  slug           String          @unique
+  icon           String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  accommodations Accommodation[] @relation("AccommodationToAmenities")
+}

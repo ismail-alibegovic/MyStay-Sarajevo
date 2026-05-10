@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --luxury-bg: #FAFAF8;
+    --luxury-ink: #1C1C1A;
+    --luxury-gold: #B8860B;
+    --luxury-border: rgba(0, 0, 0, 0.06);
+    --luxury-secondary: #6B6B69;
+    --luxury-accent: #D4AF37;
+  }
+  
+  body {
+    @apply font-sans antialiased bg-luxury-bg text-luxury-ink selection:bg-luxury-gold selection:text-white;
+  }
+}
+
+@layer components {
+  .bento-card {
+    @apply bg-white/70 backdrop-blur-sm border border-luxury-border rounded-[2rem] overflow-hidden transition-all duration-500 shadow-premium hover:scale-[1.01];
+  }
+  
+  .luxury-text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-b from-luxury-ink to-neutral-500;
+  }
+  
+  .glass-nav {
+    @apply bg-white/40 backdrop-blur-xl border-b border-black/5;
+  }
+  
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+  }
+}
