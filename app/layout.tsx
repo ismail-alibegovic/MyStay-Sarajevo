@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
 import Script from 'next/script'
 import '../styles/globals.css'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
-import CookieConsent from '@/components/CookieConsent'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
+import CookieConsent from './components/CookieConsent'
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
