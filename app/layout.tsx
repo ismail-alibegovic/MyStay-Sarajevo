@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
 import Script from 'next/script'
 import '../styles/globals.css'
-import Navbar from '../components/Navbar'
+import Navigation from '../components/Navigation'
 import Footer from '../components/Footer'
 import CookieConsent from '../components/CookieConsent'
 
@@ -19,8 +19,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'MyStay Sarajevo | Najbolji Smještaj u Sarajevu',
-  description: 'Pronađite najbolji smještaj u Sarajevu - apartmani, hoteli i vile. Lokalno kurirana selekcija sa najboljim cijenama na Booking.com i Airbnb.',
+  title: 'MyStay Sarajevo - Najbolji Smještaj u Sarajevu',
+  description: 'Pronađite najbolji smještaj u Sarajevu - apartmani, hoteli i vile.',
 }
 
 export default function RootLayout({
@@ -30,13 +30,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="bs" className={`${playfair.variable} ${inter.variable}`}>
-      <body className="min-h-screen bg-luxury-bg text-luxury-ink selection:bg-luxury-gold selection:text-white">
-        <Navbar />
-        <main>{children}</main>
+      <body className="min-h-screen bg-luxury-off-white font-sans text-luxury-ink selection:bg-luxury-gold selection:text-white">
+        <Navigation />
+        {children}
         <Footer />
         <CookieConsent />
         <Script
-          id="travelpayouts-drive"
+          id="travelpayouts-script"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `(function(){var script=document.createElement("script");script.async=1;script.src="https://emrldtp.com/NTI4MjMx.js?t=528231";document.head.appendChild(script);})();`,
