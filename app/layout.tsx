@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
 import Script from 'next/script'
 import '../styles/globals.css'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import CookieConsent from './components/CookieConsent'
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
+import CookieConsent from '../components/CookieConsent'
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -21,22 +21,6 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'MyStay Sarajevo | Najbolji Smještaj u Sarajevu',
   description: 'Pronađite najbolji smještaj u Sarajevu - apartmani, hoteli i vile. Lokalno kurirana selekcija sa najboljim cijenama na Booking.com i Airbnb.',
-  keywords: 'Sarajevo, smještaj, apartmani, hoteli, vile, Bosna i Hercegovina, turizam',
-  openGraph: {
-    title: 'MyStay Sarajevo | Najbolji Smještaj u Sarajevu',
-    description: 'Pronađite najbolji smještaj u Sarajevu - apartmani, hoteli i vile.',
-    type: 'website',
-    locale: 'bs_BA',
-    url: 'https://mystaysarajevo.com',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'MyStay Sarajevo | Najbolji Smještaj u Sarajevu',
-    description: 'Pronađite najbolji smještaj u Sarajevu - apartmani, hoteli i vile.',
-  },
-  verification: {
-    google: 'your-google-verification-code',
-  },
 }
 
 export default function RootLayout({
