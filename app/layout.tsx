@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
 import Script from 'next/script'
-import './globals.css'
+import '../styles/globals.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import CookieConsent from '@/components/CookieConsent'
@@ -19,29 +19,20 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: {
-    default: 'MyStay Sarajevo | Najbolji smještaj u Sarajevu',
-    template: '%s | MyStay Sarajevo',
-  },
+  title: 'MyStay Sarajevo | Najbolji Smještaj u Sarajevu',
   description: 'Pronađite najbolji smještaj u Sarajevu - apartmani, hoteli i vile. Lokalno kurirana selekcija sa najboljim cijenama na Booking.com i Airbnb.',
-  keywords: ['smještaj Sarajevo', 'apartmani Sarajevo', 'hoteli Sarajevo', 'Sarajevo turizam', 'MyStay'],
-  authors: [{ name: 'MyStay Sarajevo' }],
-  creator: 'MyStay Sarajevo',
+  keywords: 'Sarajevo, smještaj, apartmani, hoteli, vile, Bosna i Hercegovina, turizam',
   openGraph: {
+    title: 'MyStay Sarajevo | Najbolji Smještaj u Sarajevu',
+    description: 'Pronađite najbolji smještaj u Sarajevu - apartmani, hoteli i vile.',
     type: 'website',
     locale: 'bs_BA',
     url: 'https://mystaysarajevo.com',
-    siteName: 'MyStay Sarajevo',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
+    title: 'MyStay Sarajevo | Najbolji Smještaj u Sarajevu',
+    description: 'Pronađite najbolji smještaj u Sarajevu - apartmani, hoteli i vile.',
   },
   verification: {
     google: 'your-google-verification-code',
@@ -55,18 +46,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="bs" className={`${playfair.variable} ${inter.variable}`}>
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-      </head>
-      <body className="font-sans antialiased bg-luxury-bg text-luxury-ink selection:bg-luxury-gold selection:text-white">
+      <body className="min-h-screen bg-luxury-bg text-luxury-ink selection:bg-luxury-gold selection:text-white">
         <Navbar />
         <main>{children}</main>
         <Footer />
         <CookieConsent />
         <Script
-          id="travelpayouts"
-          strategy="lazyOnload"
-          dangerouslySetInnerHTML={{ __html: `(function(){var script=document.createElement("script");script.async=1;script.src="https://emrldtp.com/NTI4MjMx.js?t=528231";document.head.appendChild(script)})()` }}
+          id="travelpayouts-drive"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var script=document.createElement("script");script.async=1;script.src="https://emrldtp.com/NTI4MjMx.js?t=528231";document.head.appendChild(script);})();`,
+          }}
         />
       </body>
     </html>
