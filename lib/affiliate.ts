@@ -21,22 +21,51 @@ export const AFFILIATE_BRANDS = {
   BOOKING: 'https://booking.tp.st/Y8yX6r9p', // General Booking.com deep link
 };
 
+interface BookingParams {
+  checkin?: string;
+  checkout?: string;
+  adults?: number;
+  children?: number;
+}
+
 /**
  * Build a Booking.com hotel deep link
  */
-export function buildBookingUrl(hotelBookingId: string): string {
+export function buildBookingUrl(hotelBookingId: string, params?: BookingParams): string {
   // If we have a specific hotel ID, we can build a direct link
   // Otherwise return the general search for Sarajevo
-  if (!hotelBookingId) return buildBookingSearchUrl('Sarajevo');
+  if (!hotelBookingId) return buildBookingSearchUrl('Sarajevo', params);
   
-  return `https://www.booking.com/hotel/ba/${hotelBookingId}.bs.html?aid=${TRAVELPAYOUTS_AID}&label=${TRAVELPAYOUTS_LABEL}`;
+  const baseUrl = `https://www.booking.com/hotel/ba/${hotelBookingId}.bs.html`;
+  const url = new URL(baseUrl);
+  
+  url.searchParams.set('aid', TRAVELPAYOUTS_AID);
+  url.searchParams.set('label', TRAVELPAYOUTS_LABEL);
+  
+  if (params?.checkin) url.searchParams.set('checkin', params.checkin);
+  if (params?.checkout) url.searchParams.set('checkout', params.checkout);
+  if (params?.adults) url.searchParams.set('group_adults', params.adults.toString());
+  if (params?.children) url.searchParams.set('group_children', params.children.toString());
+  
+  return url.toString();
 }
 
 /**
  * Build general Booking.com search URL
  */
-export function buildBookingSearchUrl(destination: string = 'Sarajevo'): string {
-  return `https://www.booking.com/searchresults.bs.html?ss=${encodeURIComponent(destination)}&aid=${TRAVELPAYOUTS_AID}&label=${TRAVELPAYOUTS_LABEL}`;
+export function buildBookingSearchUrl(destination: string = 'Sarajevo', params?: BookingParams): string {
+  const url = new URL('https://www.booking.com/searchresults.bs.html');
+  
+  url.searchParams.set('ss', destination);
+  url.searchParams.set('aid', TRAVELPAYOUTS_AID);
+  url.searchParams.set('label', TRAVELPAYOUTS_LABEL);
+  
+  if (params?.checkin) url.searchParams.set('checkin', params.checkin);
+  if (params?.checkout) url.searchParams.set('checkout', params.checkout);
+  if (params?.adults) url.searchParams.set('group_adults', params.adults.toString());
+  if (params?.children) url.searchParams.set('group_children', params.children.toString());
+  
+  return url.toString();
 }
 
 /**

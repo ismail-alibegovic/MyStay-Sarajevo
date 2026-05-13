@@ -7,14 +7,13 @@ import ESIMSection from '@/components/ESIMSection'
 import RentCarSection from '@/components/RentCarSection'
 import ActivitiesSection from '@/components/ActivitiesSection'
 import GuideSection from '@/components/GuideSection'
-import Footer from '@/components/Footer'
-import Navigation from '@/components/Navigation'
+import SearchDates from '@/components/SearchDates'
 
 // Force dynamic rendering to avoid database connection at build time
 export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
-  // Fetch accommodations at build time (SSG)
+  // Fetch accommodations
   const accommodations = await prisma.accommodation.findMany({
     include: {
       accommodationType: true,
@@ -48,14 +47,16 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       
-      <Navigation />
-      
       <main className="min-h-screen">
         <Hero 
           headline={translations.hero.headline}
           subheadline={translations.hero.subheadline}
           ctaText={translations.hero.cta}
         />
+
+        <div className="max-w-4xl mx-auto px-6 -mt-16 relative z-20">
+          <SearchDates />
+        </div>
         
         <section className="max-w-7xl mx-auto px-6 py-16">
           <AccommodationGrid accommodations={accommodations} />
@@ -71,8 +72,6 @@ export default async function HomePage() {
         
         <GuideSection />
       </main>
-      
-      <Footer />
     </>
   )
 }

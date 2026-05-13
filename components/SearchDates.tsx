@@ -47,11 +47,11 @@ export default function SearchDates({
     if (onSearch) {
       onSearch(params)
     } else if (hotelBookingId) {
-      // Redirect to Booking.com with affiliate link
-      const url = buildBookingUrl(hotelBookingId)
+      // Redirect to Booking.com with affiliate link and params
+      const url = buildBookingUrl(hotelBookingId, params)
       window.open(url, '_blank')
     } else {
-      // Search all Sarajevo hotels
+      // Search all Sarajevo hotels with params
       const url = buildBookingSearchUrl('Sarajevo', params)
       window.open(url, '_blank')
     }

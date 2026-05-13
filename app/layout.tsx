@@ -37,10 +37,8 @@ export default function RootLayout({
         <CookieConsent />
         <Script
           id="travelpayouts-script"
+          src="https://emrldtp.com/NTI4MjMx.js?t=528231"
           strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var script=document.createElement("script");script.async=1;script.src="https://emrldtp.com/NTI4MjMx.js?t=528231";document.head.appendChild(script);})();`,
-          }}
         />
       </body>
     </html>
