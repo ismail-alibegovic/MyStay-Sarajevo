@@ -6,6 +6,8 @@ import Destinations from '@/components/Destinations'
 import ESIMSection from '@/components/ESIMSection'
 import RentCarSection from '@/components/RentCarSection'
 import ActivitiesSection from '@/components/ActivitiesSection'
+import FlightsSection from '@/components/FlightsSection'
+import InsuranceSection from '@/components/InsuranceSection'
 import GuideSection from '@/components/GuideSection'
 import SearchDates from '@/components/SearchDates'
 
@@ -13,7 +15,6 @@ import SearchDates from '@/components/SearchDates'
 export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
-  // Fetch accommodations
   const accommodations = await prisma.accommodation.findMany({
     include: {
       accommodationType: true,
@@ -26,7 +27,6 @@ export default async function HomePage() {
     ],
   })
 
-  // JSON-LD Schema for Website
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
@@ -46,30 +46,44 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      
+
       <main className="min-h-screen">
-        <Hero 
+        {/* 1. Hero */}
+        <Hero
           headline={translations.hero.headline}
           subheadline={translations.hero.subheadline}
           ctaText={translations.hero.cta}
         />
 
+        {/* 2. Quick date/guest search widget */}
         <div className="max-w-4xl mx-auto px-6 -mt-16 relative z-20">
           <SearchDates />
         </div>
-        
-        <section className="max-w-7xl mx-auto px-6 py-16">
+
+        {/* 3. Accommodation listings */}
+        <section id="accommodation" className="max-w-7xl mx-auto px-6 py-20">
           <AccommodationGrid accommodations={accommodations} />
         </section>
-        
+
+        {/* 4. Destinations */}
         <Destinations />
-        
+
+        {/* 5. Tours & Activities — WeGoTrip featured */}
+        <ActivitiesSection />
+
+        {/* 6. Transfers & Car Rental */}
+        <RentCarSection />
+
+        {/* 7. Flights — Kiwi.com */}
+        <FlightsSection />
+
+        {/* 8. eSIM — Yesim & Airalo */}
         <ESIMSection />
 
-        <ActivitiesSection />
-        
-        <RentCarSection />
-        
+        {/* 9. Travel Insurance — Compensair */}
+        <InsuranceSection />
+
+        {/* 10. City Guide */}
         <GuideSection />
       </main>
     </>

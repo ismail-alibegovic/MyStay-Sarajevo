@@ -1,25 +1,57 @@
 /**
  * Travelpayouts Affiliate Link Builder
  * Centralized logic for all affiliate programs used in MyStay Sarajevo
+ *
+ * Travelpayouts tracking: trs=528231 | shmarker=726312
  */
 
-// Travelpayouts AID (Affiliate ID) - Default if not provided in env
+// Travelpayouts tracking identifiers
+const TRS = process.env.TRAVELPAYOUTS_TRS || '528231';
+const SHMARKER = process.env.TRAVELPAYOUTS_SHMARKER || '726312';
 const TRAVELPAYOUTS_AID = process.env.TRAVELPAYOUTS_AID || '516629';
 const TRAVELPAYOUTS_LABEL = 'mystay-sarajevo';
 
 /**
- * Common brands and their base Travelpayouts redirect URLs
+ * All affiliate brand URLs — updated for 2026
  */
 export const AFFILIATE_BRANDS = {
-  LOCALRENT: 'https://localrent.tp.st/cqRoqom7',
-  GETTRANSFER: 'https://gettransfer.tp.st/GoKzHnYV',
-  YESIM: 'https://yesim.tp.st/7PuGrZg2',
-  AIRALO: 'https://airalo.tp.st/86iUNaUC',
-  KLOOK: 'https://klook.tp.st/n4zW9mN8',
-  TIQETS: 'https://tiqets.tp.st/6rE7k5Qv',
-  KIWI: 'https://kiwi.tp.st/8Xo9zM3m',
-  BOOKING: 'https://booking.tp.st/Y8yX6r9p', // General Booking.com deep link
+  // Car Rental
+  LOCALRENT:    process.env.NEXT_PUBLIC_LOCALRENT_URL    || 'https://bikesbooking.tp.st/IAs8hfdB',
+  BIKESBOOKING: process.env.NEXT_PUBLIC_BIKESBOOKING_URL || 'https://bikesbooking.tp.st/D3QJjvEY',
+
+  // Transfers
+  GETTRANSFER:  process.env.NEXT_PUBLIC_GETTRANSFER_URL  || 'https://tp.st/BuTMFqzJ',
+  KIWITAXI:     process.env.NEXT_PUBLIC_KIWITAXI_URL     || 'https://kiwitravel.tp.st/IOEtwIu6',
+
+  // eSIM
+  YESIM:        process.env.NEXT_PUBLIC_YESIM_URL        || 'https://ektatraveling.tp.st/dV2C7SoI',
+  AIRALO:       process.env.NEXT_PUBLIC_AIRALO_URL       || 'https://airalo.tp.st/86iUNaUC',
+
+  // Flights
+  KIWI:         process.env.NEXT_PUBLIC_KIWI_URL         || 'https://kiwi.tp.st/7zhn46qg',
+
+  // Tours & Activities
+  WEGOTRIP:     process.env.NEXT_PUBLIC_WEGOTRIP_URL     || 'https://wegotrip.tp.st/Co7z7fka',
+  TIQETS:       process.env.NEXT_PUBLIC_TIQETS_URL       || 'https://tiqets.tp.st/6rE7k5Qv',
+
+  // Insurance
+  COMPENSAIR:   process.env.NEXT_PUBLIC_COMPENSAIR_URL   || 'https://compensair.tp.st/n1ZY1eZt',
+
+  // Hotels / Booking
+  BOOKING:      process.env.NEXT_PUBLIC_BOOKING_URL      || 'https://booking.tp.st/Y8yX6r9p',
 };
+
+/**
+ * Kiwi.com Hotels widget script URL (USD) — embeds search widget
+ */
+export const KIWI_HOTELS_WIDGET_USD = `https://tpwgts.com/content?currency=usd&trs=${TRS}&shmarker=${SHMARKER}&locale=en&stops=any&show_hotels=true&powered_by=true&border_radius=0&plain=false&color_button=%23B7C059ff&color_button_text=%23ffffff&promo_id=3414&campaign_id=111`;
+
+/**
+ * Kiwi.com Hotels widget script URL (EUR)
+ */
+export const KIWI_HOTELS_WIDGET_EUR = `https://tpwgts.com/content?currency=eur&trs=${TRS}&shmarker=${SHMARKER}&powered_by=true&locale=en&campaign_id=111&promo_id=4484`;
+
+// ─── Booking.com ──────────────────────────────────────────────────────────────
 
 interface BookingParams {
   checkin?: string;
@@ -29,77 +61,45 @@ interface BookingParams {
 }
 
 /**
- * Build a Booking.com hotel deep link
+ * Build a Booking.com hotel deep link with optional date/guest params.
  */
 export function buildBookingUrl(hotelBookingId: string, params?: BookingParams): string {
-  // If we have a specific hotel ID, we can build a direct link
-  // Otherwise return the general search for Sarajevo
   if (!hotelBookingId) return buildBookingSearchUrl('Sarajevo', params);
-  
-  const baseUrl = `https://www.booking.com/hotel/ba/${hotelBookingId}.bs.html`;
-  const url = new URL(baseUrl);
-  
+
+  const url = new URL(`https://www.booking.com/hotel/ba/${hotelBookingId}.bs.html`);
   url.searchParams.set('aid', TRAVELPAYOUTS_AID);
   url.searchParams.set('label', TRAVELPAYOUTS_LABEL);
-  
-  if (params?.checkin) url.searchParams.set('checkin', params.checkin);
+  if (params?.checkin)  url.searchParams.set('checkin', params.checkin);
   if (params?.checkout) url.searchParams.set('checkout', params.checkout);
-  if (params?.adults) url.searchParams.set('group_adults', params.adults.toString());
+  if (params?.adults)   url.searchParams.set('group_adults', params.adults.toString());
   if (params?.children) url.searchParams.set('group_children', params.children.toString());
-  
   return url.toString();
 }
 
 /**
- * Build general Booking.com search URL
+ * Build a general Booking.com search URL for a destination.
  */
-export function buildBookingSearchUrl(destination: string = 'Sarajevo', params?: BookingParams): string {
+export function buildBookingSearchUrl(destination = 'Sarajevo', params?: BookingParams): string {
   const url = new URL('https://www.booking.com/searchresults.bs.html');
-  
   url.searchParams.set('ss', destination);
   url.searchParams.set('aid', TRAVELPAYOUTS_AID);
   url.searchParams.set('label', TRAVELPAYOUTS_LABEL);
-  
-  if (params?.checkin) url.searchParams.set('checkin', params.checkin);
+  if (params?.checkin)  url.searchParams.set('checkin', params.checkin);
   if (params?.checkout) url.searchParams.set('checkout', params.checkout);
-  if (params?.adults) url.searchParams.set('group_adults', params.adults.toString());
+  if (params?.adults)   url.searchParams.set('group_adults', params.adults.toString());
   if (params?.children) url.searchParams.set('group_children', params.children.toString());
-  
   return url.toString();
 }
 
-/**
- * Build GetTransfer URL (often needs destination for better conversion)
- */
-export function buildTransferUrl(destination: string = 'Sarajevo'): string {
-  return `${AFFILIATE_BRANDS.GETTRANSFER}?endpoint=${encodeURIComponent(destination)}`;
-}
+// ─── Simple link builders ─────────────────────────────────────────────────────
 
-/**
- * Build Localrent URL (specialized for Balkan car rentals)
- */
-export function buildLocalrentUrl(): string {
-  return AFFILIATE_BRANDS.LOCALRENT;
-}
-
-/**
- * Build Activity/Tour URLs (Klook or Tiqets)
- */
-export function buildActivitiesUrl(brand: 'KLOOK' | 'TIQETS' = 'KLOOK'): string {
-  const baseUrl = brand === 'KLOOK' ? AFFILIATE_BRANDS.KLOOK : AFFILIATE_BRANDS.TIQETS;
-  return `${baseUrl}?q=${encodeURIComponent('Sarajevo')}`;
-}
-
-/**
- * Build eSIM URLs
- */
-export function buildEsimUrl(brand: 'YESIM' | 'AIRALO' = 'YESIM'): string {
-  return brand === 'YESIM' ? AFFILIATE_BRANDS.YESIM : AFFILIATE_BRANDS.AIRALO;
-}
-
-/**
- * Build Flight URLs (Kiwi.com)
- */
-export function buildFlightsUrl(destination: string = 'SJJ'): string {
-  return `${AFFILIATE_BRANDS.KIWI}?to=${destination}`;
-}
+export const buildLocalrentUrl    = (): string => AFFILIATE_BRANDS.LOCALRENT;
+export const buildBikesbookingUrl = (): string => AFFILIATE_BRANDS.BIKESBOOKING;
+export const buildTransferUrl     = (): string => AFFILIATE_BRANDS.GETTRANSFER;
+export const buildKiwitaxiUrl     = (): string => AFFILIATE_BRANDS.KIWITAXI;
+export const buildEsimUrl = (brand: 'YESIM' | 'AIRALO' = 'YESIM'): string =>
+  brand === 'YESIM' ? AFFILIATE_BRANDS.YESIM : AFFILIATE_BRANDS.AIRALO;
+export const buildFlightsUrl      = (): string => AFFILIATE_BRANDS.KIWI;
+export const buildToursUrl        = (): string => AFFILIATE_BRANDS.WEGOTRIP;
+export const buildTiqetsUrl       = (): string => AFFILIATE_BRANDS.TIQETS;
+export const buildInsuranceUrl    = (): string => AFFILIATE_BRANDS.COMPENSAIR;

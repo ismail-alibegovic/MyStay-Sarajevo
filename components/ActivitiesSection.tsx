@@ -1,94 +1,156 @@
-import { Ticket, Map, Plane, ExternalLink } from 'lucide-react'
-import { translations } from '@/lib/translations'
-import { buildActivitiesUrl, buildFlightsUrl } from '@/lib/affiliate'
+import { Map, Camera, Mountain, Clock, Users, Star, ExternalLink } from 'lucide-react'
+import { buildToursUrl, buildTiqetsUrl } from '@/lib/affiliate'
+
+const WEGOTRIP_URL = 'https://wegotrip.tp.st/Co7z7fka'
+
+const featuredTour = {
+  title: 'Sarajevo: Vođena Tura po Starom Gradu',
+  provider: 'WeGoTrip',
+  description: 'Otkrijte skrivene priče Baščaršije, Sebilj fontane i sarajevske džamije uz audio vodič koji možete slušati u vlastitom tempu — bez čekanja na grupu.',
+  duration: '2–3 sata',
+  type: 'Self-guided audio',
+  rating: 4.9,
+  reviews: 312,
+  highlights: [
+    'Baščaršija & Gazi Husrev-begova džamija',
+    'Vijećnica – historijska gradska vijećnica',
+    'Latinsko ćuprija & počeci WWI',
+    'Lokalna hrana & kafane',
+  ],
+  image: 'https://images.unsplash.com/photo-1586348943529-beaae6c28db9?auto=format&fit=crop&q=80&w=1200',
+  url: WEGOTRIP_URL,
+}
+
+const moreTours = [
+  {
+    icon: Mountain,
+    title: 'Ratni Tunel & Historija Opsade',
+    description: 'Posjeta tunelu koji je spasio Sarajevo tokom opsade 1992–95.',
+    url: buildToursUrl(),
+    cta: 'Rezerviši na Klook',
+  },
+  {
+    icon: Camera,
+    title: 'Muzeji bez Reda',
+    description: 'Ulaznice za Zemaljski muzej, Galeriju i Vijećnicu — bez čekanja.',
+    url: buildTiqetsUrl(),
+    cta: 'Kupi na Tiqets',
+  },
+]
 
 export default function ActivitiesSection() {
-  const activities = [
-    {
-      name: 'Klook',
-      title: 'Ture i Izleti',
-      description: 'Najbolje vođene ture kroz Sarajevo, posjete ratnim tunelima i planinsko pješačenje.',
-      url: buildActivitiesUrl('KLOOK'),
-      cta: 'Rezerviši na Klook',
-      color: 'from-orange-500 to-red-500',
-      icon: Map,
-    },
-    {
-      name: 'Tiqets',
-      title: 'Muzeji i Atrakcije',
-      description: 'Ulaznice za muzeje, galerije i kulturne događaje u Sarajevu bez čekanja u redu.',
-      url: buildActivitiesUrl('TIQETS'),
-      cta: 'Ulaznice na Tiqets',
-      color: 'from-blue-600 to-indigo-600',
-      icon: Ticket,
-    },
-    {
-      name: 'Kiwi',
-      title: 'Letovi za Sarajevo',
-      description: 'Pronađite najpovoljnije letove do Sarajeva (SJJ) iz bilo kojeg dijela svijeta.',
-      url: buildFlightsUrl('SJJ'),
-      cta: 'Pretraži Letove',
-      color: 'from-teal-500 to-emerald-500',
-      icon: Plane,
-    },
-  ]
-
   return (
     <section id="activities" className="py-24 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-2 text-luxury-gold mb-4">
-              <Ticket size={20} />
-              <span className="text-sm font-bold uppercase tracking-widest">Planiranje Puta</span>
+
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <div>
+            <div className="flex items-center gap-2 text-luxury-gold mb-3">
+              <Map size={18} />
+              <span className="text-xs font-black uppercase tracking-widest">Ture & Aktivnosti</span>
             </div>
-            <h2 className="text-4xl lg:text-5xl font-serif mb-6">Doživite Sarajevo kao lokalac</h2>
-            <p className="text-lg text-luxury-secondary font-light">
-              Od letova i transfera do autentičnih tura i ulaznica za muzeje - sve na jednom mjestu.
-            </p>
+            <h2 className="text-4xl lg:text-5xl font-serif leading-tight max-w-lg">
+              Doživite Sarajevo kao lokalac
+            </h2>
           </div>
-          
-          <a 
-            href={buildActivitiesUrl('KLOOK')}
+          <a
+            href={WEGOTRIP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-luxury-ink text-white rounded-full hover:bg-luxury-ink/90 transition-all group"
+            className="inline-flex items-center gap-2 px-6 py-3 border border-luxury-ink/20 text-luxury-ink rounded-full text-[11px] font-bold uppercase tracking-wider hover:border-luxury-gold hover:text-luxury-gold transition-all group"
           >
-            <span>Istraži Sve Aktivnosti</span>
-            <ExternalLink size={16} className="group-hover:rotate-45 transition-transform" />
+            Sve ture
+            <ExternalLink size={14} className="group-hover:rotate-45 transition-transform" />
           </a>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {activities.map((item) => (
-            <div 
-              key={item.name}
-              className="group relative flex flex-col p-8 rounded-[2.5rem] bg-luxury-ink/[0.02] border border-black/5 hover:border-luxury-gold/20 transition-all overflow-hidden"
-            >
-              <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${item.color} opacity-5 blur-2xl group-hover:opacity-10 transition-opacity`} />
-              
-              <div className="mb-8">
-                <div className="w-12 h-12 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-6">
-                  <item.icon className="text-luxury-gold w-6 h-6" />
-                </div>
-                <h3 className="text-2xl font-bold mb-3">{item.title}</h3>
-                <p className="text-luxury-secondary font-light mb-8 leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
-
-              <div className="mt-auto">
-                <a 
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 font-bold text-sm uppercase tracking-wider text-luxury-ink group-hover:text-luxury-gold transition-colors"
-                >
-                  {item.cta}
-                  <ExternalLink size={14} />
-                </a>
+        {/* FEATURED WEGOTRIP TOUR */}
+        <a
+          href={featuredTour.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group block rounded-[2.5rem] overflow-hidden bg-luxury-ink text-white hover:shadow-2xl transition-all duration-500 mb-8"
+        >
+          <div className="grid lg:grid-cols-2">
+            {/* Image */}
+            <div className="relative h-64 lg:h-auto overflow-hidden">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={featuredTour.image}
+                alt={featuredTour.title}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-luxury-ink/60 to-transparent lg:bg-none" />
+              <div className="absolute top-6 left-6">
+                <span className="inline-block bg-luxury-gold text-white text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full">
+                  ⭐ Featured Tour
+                </span>
               </div>
             </div>
+
+            {/* Content */}
+            <div className="p-10 lg:p-14 flex flex-col justify-between">
+              <div className="space-y-5">
+                {/* Provider tag */}
+                <p className="text-luxury-gold text-xs font-bold uppercase tracking-widest">{featuredTour.provider}</p>
+
+                <h3 className="text-2xl lg:text-3xl font-serif leading-tight">{featuredTour.title}</h3>
+
+                <p className="text-white/60 font-light leading-relaxed text-sm">
+                  {featuredTour.description}
+                </p>
+
+                {/* Meta */}
+                <div className="flex flex-wrap gap-4 text-sm text-white/50">
+                  <span className="flex items-center gap-1.5"><Clock size={14} /> {featuredTour.duration}</span>
+                  <span className="flex items-center gap-1.5"><Users size={14} /> {featuredTour.type}</span>
+                  <span className="flex items-center gap-1.5"><Star size={14} className="fill-luxury-gold text-luxury-gold" /> {featuredTour.rating} ({featuredTour.reviews})</span>
+                </div>
+
+                {/* Highlights */}
+                <ul className="space-y-2">
+                  {featuredTour.highlights.map((h) => (
+                    <li key={h} className="flex items-start gap-2 text-sm text-white/70">
+                      <span className="w-1.5 h-1.5 bg-luxury-gold rounded-full mt-1.5 flex-shrink-0" />
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* CTA */}
+              <div className="flex items-center gap-3 mt-8 pt-6 border-t border-white/10">
+                <span className="text-[10px] font-black uppercase tracking-widest text-luxury-gold">
+                  Rezerviši Audio Turu
+                </span>
+                <ExternalLink size={14} className="text-luxury-gold group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+          </div>
+        </a>
+
+        {/* More Tours Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {moreTours.map((tour) => (
+            <a
+              key={tour.title}
+              href={tour.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-start gap-5 p-8 bg-luxury-ink/[0.02] rounded-3xl border border-black/5 hover:border-luxury-gold/20 hover:shadow-md transition-all"
+            >
+              <div className="w-12 h-12 bg-luxury-gold/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                <tour.icon className="w-6 h-6 text-luxury-gold" />
+              </div>
+              <div>
+                <h4 className="font-bold mb-1">{tour.title}</h4>
+                <p className="text-sm text-luxury-secondary font-light mb-3">{tour.description}</p>
+                <span className="text-[10px] font-black uppercase tracking-wider text-luxury-ink/50 group-hover:text-luxury-gold transition-colors">
+                  {tour.cta} →
+                </span>
+              </div>
+            </a>
           ))}
         </div>
       </div>
