@@ -1,20 +1,20 @@
-import Link from 'next/link'
 import { Car, Plane, ArrowRight } from 'lucide-react'
 import { translations } from '@/lib/translations'
+import { buildLocalrentUrl, buildTransferUrl } from '@/lib/affiliate'
 
 export default function RentCarSection() {
   const options = [
     {
       title: translations.rentCar.searchCars,
-      description: 'Pronađite savršen auto za vaše istraživanje Sarajeva',
-      url: process.env.NEXT_PUBLIC_LOCALRENT_AFFILIATE_URL || 'https://localrent.tp.st/cqRoqom7',
+      description: 'Pronađite savršen auto za vaše istraživanje Sarajeva uz Localrent - podržite lokalne rent-a-car agencije.',
+      url: buildLocalrentUrl(),
       icon: Car,
       gradient: 'from-amber-500 to-orange-500',
     },
     {
       title: translations.rentCar.airportTransfer,
-      description: 'Transfer sa aerodroma do vašeg hotela ili apartmana',
-      url: process.env.NEXT_PUBLIC_GETRENTACAR_AFFILIATE_URL || 'https://getrentacar.tp.st/GoKzHnYV',
+      description: 'Siguran i pouzdan transfer sa aerodroma do vašeg hotela uz GetTransfer.',
+      url: buildTransferUrl('Sarajevo Airport'),
       icon: Plane,
       gradient: 'from-blue-500 to-cyan-500',
     },
@@ -51,7 +51,7 @@ export default function RentCarSection() {
                 <p className="text-white/60 font-light">{option.description}</p>
                 
                 <div className="flex items-center gap-2 text-luxury-gold">
-                  <span className="text-[10px] font-bold uppercase tracking-wider">Rezerviši</span>
+                  <span className="text-[10px] font-bold uppercase tracking-wider">Rezerviši Odmah</span>
                   <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
                 </div>
               </div>

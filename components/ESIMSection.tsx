@@ -1,31 +1,20 @@
 import { Wifi, ExternalLink } from 'lucide-react'
 import { translations } from '@/lib/translations'
+import { buildEsimUrl } from '@/lib/affiliate'
 
 export default function ESIMSection() {
   const providers = [
     {
       name: translations.esim.providers.yesim,
-      url: process.env.NEXT_PUBLIC_YESIM_AFFILIATE_URL || 'https://yesim.tp.st/7PuGrZg2',
+      url: buildEsimUrl('YESIM'),
       color: 'from-amber-500 to-orange-500',
       features: ['Unlimited data', '100+ countries', 'Instant activation'],
     },
     {
       name: translations.esim.providers.airalo,
-      url: process.env.NEXT_PUBLIC_AIRALO_AFFILIATE_URL || 'https://airalo.tp.st/86iUNaUC',
+      url: buildEsimUrl('AIRALO'),
       color: 'from-blue-500 to-cyan-500',
       features: ['Affordable plans', '200+ countries', 'Easy setup'],
-    },
-    {
-      name: translations.esim.providers.drimsim,
-      url: process.env.NEXT_PUBLIC_DRIMSIM_AFFILIATE_URL || 'https://drimsim.tp.st/PUAc9sbZ',
-      color: 'from-purple-500 to-pink-500',
-      features: ['Pay as you go', 'No expiration', 'Global coverage'],
-    },
-    {
-      name: translations.esim.providers.saily,
-      url: process.env.NEXT_PUBLIC_SAILY_AFFILIATE_URL || 'https://saily.tp.st/LKvc7wrT',
-      color: 'from-green-500 to-teal-500',
-      features: ['Flexible plans', 'Instant delivery', '24/7 support'],
     },
   ]
   
@@ -42,7 +31,7 @@ export default function ESIMSection() {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {providers.map((provider) => (
             <a
               key={provider.name}

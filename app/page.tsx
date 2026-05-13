@@ -5,6 +5,7 @@ import Hero from '@/components/Hero'
 import Destinations from '@/components/Destinations'
 import ESIMSection from '@/components/ESIMSection'
 import RentCarSection from '@/components/RentCarSection'
+import ActivitiesSection from '@/components/ActivitiesSection'
 import GuideSection from '@/components/GuideSection'
 import Footer from '@/components/Footer'
 import Navigation from '@/components/Navigation'
@@ -63,6 +64,8 @@ export default async function HomePage() {
         <Destinations />
         
         <ESIMSection />
+
+        <ActivitiesSection />
         
         <RentCarSection />
         

@@ -1,151 +1,76 @@
 /**
  * Travelpayouts Affiliate Link Builder
- * Builds proper Booking.com affiliate deep links
+ * Centralized logic for all affiliate programs used in MyStay Sarajevo
  */
 
-interface BookingParams {
-  checkin?: string; // YYYY-MM-DD
-  checkout?: string; // YYYY-MM-DD
-  adults?: number; // 1-8
-  children?: number; // 0-4
-  rooms?: number; // Default 1
-}
-
-// Travelpayouts AID (Affiliate ID)
-const TRAVELPAYOUTS_AID = process.env.TRAVELPAYOUTS_AID || 'YOUR_AID_HERE';
+// Travelpayouts AID (Affiliate ID) - Default if not provided in env
+const TRAVELPAYOUTS_AID = process.env.TRAVELPAYOUTS_AID || '516629';
 const TRAVELPAYOUTS_LABEL = 'mystay-sarajevo';
 
 /**
- * Build Booking.com affiliate URL
- * @param hotelBookingId - Booking.com hotel ID (e.g., "hotel-europe")
- * @param params - Optional booking parameters
- * @returns Full affiliate URL
+ * Common brands and their base Travelpayouts redirect URLs
  */
-export function buildBookingUrl(
-  hotelBookingId: string,
-  params?: BookingParams
-): string {
-  // Base URL
-  const baseUrl = `https://www.booking.com/hotel/ba/${hotelBookingId}.bs.html`;
+export const AFFILIATE_BRANDS = {
+  LOCALRENT: 'https://localrent.tp.st/cqRoqom7',
+  GETTRANSFER: 'https://gettransfer.tp.st/GoKzHnYV',
+  YESIM: 'https://yesim.tp.st/7PuGrZg2',
+  AIRALO: 'https://airalo.tp.st/86iUNaUC',
+  KLOOK: 'https://klook.tp.st/n4zW9mN8',
+  TIQETS: 'https://tiqets.tp.st/6rE7k5Qv',
+  KIWI: 'https://kiwi.tp.st/8Xo9zM3m',
+  BOOKING: 'https://booking.tp.st/Y8yX6r9p', // General Booking.com deep link
+};
+
+/**
+ * Build a Booking.com hotel deep link
+ */
+export function buildBookingUrl(hotelBookingId: string): string {
+  // If we have a specific hotel ID, we can build a direct link
+  // Otherwise return the general search for Sarajevo
+  if (!hotelBookingId) return buildBookingSearchUrl('Sarajevo');
   
-  // Required affiliate parameters
-  const affiliateParams = new URLSearchParams({
-    aid: TRAVELPAYOUTS_AID,
-    label: TRAVELPAYOUTS_LABEL,
-  });
-
-  // Add optional parameters if provided
-  if (params?.checkin) {
-    affiliateParams.append('checkin', params.checkin);
-  }
-
-  if (params?.checkout) {
-    affiliateParams.append('checkout', params.checkout);
-  }
-
-  if (params?.adults && params.adults >= 1 && params.adults <= 8) {
-    affiliateParams.append('group_adults', params.adults.toString());
-  }
-
-  if (params?.children && params.children >= 0 && params.children <= 4) {
-    affiliateParams.append('group_children', params.children.toString());
-  }
-
-  if (params?.rooms) {
-    affiliateParams.append('no_rooms', params.rooms.toString());
-  } else {
-    affiliateParams.append('no_rooms', '1');
-  }
-
-  return `${baseUrl}?${affiliateParams.toString()}`;
+  return `https://www.booking.com/hotel/ba/${hotelBookingId}.bs.html?aid=${TRAVELPAYOUTS_AID}&label=${TRAVELPAYOUTS_LABEL}`;
 }
 
 /**
  * Build general Booking.com search URL
- * @param destination - Search destination (e.g., "Sarajevo")
- * @param params - Optional search parameters
- * @returns Full search URL
  */
-export function buildBookingSearchUrl(
-  destination: string,
-  params?: BookingParams
-): string {
-  const baseUrl = 'https://www.booking.com/searchresults.bs.html';
-  
-  const searchParams = new URLSearchParams({
-    aid: TRAVELPAYOUTS_AID,
-    label: TRAVELPAYOUTS_LABEL,
-    ss: destination,
-  });
-
-  if (params?.checkin) {
-    searchParams.append('checkin', params.checkin);
-  }
-
-  if (params?.checkout) {
-    searchParams.append('checkout', params.checkout);
-  }
-
-  if (params?.adults) {
-    searchParams.append('group_adults', params.adults.toString());
-  }
-
-  if (params?.children) {
-    searchParams.append('group_children', params.children.toString());
-  }
-
-  searchParams.append('no_rooms', params?.rooms?.toString() || '1');
-
-  return `${baseUrl}?${searchParams.toString()}`;
+export function buildBookingSearchUrl(destination: string = 'Sarajevo'): string {
+  return `https://www.booking.com/searchresults.bs.html?ss=${encodeURIComponent(destination)}&aid=${TRAVELPAYOUTS_AID}&label=${TRAVELPAYOUTS_LABEL}`;
 }
 
 /**
- * Generate date strings for booking
- * @param daysFromNow - Number of days from today
- * @param nights - Number of nights
- * @returns Object with checkin and checkout dates
+ * Build GetTransfer URL (often needs destination for better conversion)
  */
-export function generateBookingDates(
-  daysFromNow: number = 7,
-  nights: number = 3
-): { checkin: string; checkout: string } {
-  const checkin = new Date();
-  checkin.setDate(checkin.getDate() + daysFromNow);
-
-  const checkout = new Date(checkin);
-  checkout.setDate(checkout.getDate() + nights);
-
-  return {
-    checkin: checkin.toISOString().split('T')[0],
-    checkout: checkout.toISOString().split('T')[0],
-  };
+export function buildTransferUrl(destination: string = 'Sarajevo'): string {
+  return `${AFFILIATE_BRANDS.GETTRANSFER}?endpoint=${encodeURIComponent(destination)}`;
 }
 
 /**
- * Format date for display
- * @param dateStr - Date string (YYYY-MM-DD)
- * @returns Formatted date string
+ * Build Localrent URL (specialized for Balkan car rentals)
  */
-export function formatDate(dateStr: string): string {
-  const date = new Date(dateStr);
-  return date.toLocaleDateString('bs-BA', {
-    weekday: 'short',
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  });
+export function buildLocalrentUrl(): string {
+  return AFFILIATE_BRANDS.LOCALRENT;
 }
 
 /**
- * Calculate number of nights between dates
- * @param checkin - Check-in date string
- * @param checkout - Check-out date string
- * @returns Number of nights
+ * Build Activity/Tour URLs (Klook or Tiqets)
  */
-export function calculateNights(checkin: string, checkout: string): number {
-  const start = new Date(checkin);
-  const end = new Date(checkout);
-  const diffTime = Math.abs(end.getTime() - start.getTime());
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  return diffDays;
+export function buildActivitiesUrl(brand: 'KLOOK' | 'TIQETS' = 'KLOOK'): string {
+  const baseUrl = brand === 'KLOOK' ? AFFILIATE_BRANDS.KLOOK : AFFILIATE_BRANDS.TIQETS;
+  return `${baseUrl}?q=${encodeURIComponent('Sarajevo')}`;
+}
+
+/**
+ * Build eSIM URLs
+ */
+export function buildEsimUrl(brand: 'YESIM' | 'AIRALO' = 'YESIM'): string {
+  return brand === 'YESIM' ? AFFILIATE_BRANDS.YESIM : AFFILIATE_BRANDS.AIRALO;
+}
+
+/**
+ * Build Flight URLs (Kiwi.com)
+ */
+export function buildFlightsUrl(destination: string = 'SJJ'): string {
+  return `${AFFILIATE_BRANDS.KIWI}?to=${destination}`;
 }

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Star, MapPin, Wifi, Car, Coffee, Sparkles, ArrowRight, Home, ChevronRight } from 'lucide-react'
 import { translations } from '@/lib/translations'
+import { buildBookingUrl } from '@/lib/affiliate'
 
 // Force dynamic rendering to avoid database connection at build time
 export const dynamic = 'force-dynamic'
@@ -204,7 +205,7 @@ export default async function AccommodationPage({
                   fill
                   className="object-cover"
                   placeholder="blur"
-                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoKChgMDQ4ODQ4ODhYaExISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhIS/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAQFB//EACUQAAEEAgEEAgMAAAAAAAAAAAECAwQRBQAhMQYHEhMiQVKBsf/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A2YOMOOOaQxOaSxGOMYxjGMbxjjGMbxjGMbxjGMbxjGMbxjGMbxjGMbxjGMbxjGMbxjGMbxjGMbxjGMbxjGMbxj//2Q=="
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoKChgMDQ4ODQ4ODhYaExISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhIS/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAQFB//EACUQAAEEAgEEAgMAAAAAAAAAAAECAwQRBQAhMQYHEhMiQVKBsf/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A2YOMOOOaQxOaSxGOMYxjGMbxjjGMbxjGMbxjGMbxjGMbxjGMbxjGMbxjGMbxjGMbxjGMbxjGMbxjGMbxjGMbxjGMbxj//2Q=="
                   priority
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
@@ -332,7 +333,7 @@ export default async function AccommodationPage({
                 {/* CTA Button */}
                 <div className="space-y-3">
                   <a
-                    href={acc.bookingUrl}
+                    href={acc.bookingComId ? buildBookingUrl(acc.bookingComId) : acc.bookingUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     data-affiliate="booking"
@@ -348,12 +349,12 @@ export default async function AccommodationPage({
                     className="block w-full bg-luxury-gold text-white px-8 py-5 rounded-2xl text-center font-bold uppercase tracking-[0.15em] hover:bg-luxury-gold/90 transition-all shadow-lg hover:shadow-xl active:scale-[0.98]"
                   >
                     <span className="flex items-center justify-center gap-3">
-                      Provjeri dostupnost na Booking.com
+                      {translations.detail.bookNow}
                       <ArrowRight size={20} />
                     </span>
                   </a>
                   <p className="text-center text-[10px] text-ink/40 uppercase tracking-widest">
-                    Rezervišete na Booking.com — sigurno i brzo
+                    {translations.detail.secureBooking}
                   </p>
                 </div>
               </div>

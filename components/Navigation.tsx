@@ -12,6 +12,7 @@ export default function Navigation() {
   const navItems = [
     { label: translations.nav.accommodation, href: '/#accommodation' },
     { label: translations.nav.destinations, href: '/#destinations' },
+    { label: translations.nav.activities, href: '/#activities' },
     { label: translations.nav.rentCar, href: '/#rent-car' },
     { label: translations.nav.esim, href: '/#esim' },
     { label: translations.nav.guide, href: '/#guide' },

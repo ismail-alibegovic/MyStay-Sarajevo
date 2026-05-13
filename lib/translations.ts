@@ -13,6 +13,7 @@ export const translations = {
     rentCar: "Rent a Car",
     esim: "eSIM",
     guide: "Vodič",
+    activities: "Ture",
     signIn: "Prijavi se",
     signOut: "Odjavi se",
   },
@@ -116,5 +117,15 @@ export const translations = {
         description: "Pogled sa Žute Tabije u vrijeme zalaska sunca",
       },
     },
+  },
+
+  // Activities Section
+  activities: {
+    title: "Ture i Izleti",
+    subtitle: "Doživite Sarajevo kao lokalac",
+    description: "Rezervišite najbolje ture, ulaznice za muzeje i autentična iskustva.",
+    klook: "Rezerviši na Klook",
+    tiqets: "Ulaznice na Tiqets",
+    cta: "Istraži Aktivnosti",
   },
 }
