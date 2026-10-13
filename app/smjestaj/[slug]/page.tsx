@@ -380,7 +380,7 @@ export default async function AccommodationPage({
                 {relatedAccommodations.map((related: any) => (
                   <Link
                     key={related.id}
-                    href={`/smjestaj/${related.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`}
+                    href={`/smjestaj/${related.slug}`}
                     className="group block bg-white rounded-2xl overflow-hidden border border-ink/5 hover:border-luxury-gold/30 transition-all"
                   >
                     <div className="relative aspect-[3/2]">
