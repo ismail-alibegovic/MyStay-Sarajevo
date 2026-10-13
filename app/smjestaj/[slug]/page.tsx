@@ -26,16 +26,13 @@ export async function generateMetadata({
   params: Promise<{ slug: string }> 
 }): Promise<Metadata> {
   const { slug } = await params
-  const accommodations = await prisma.accommodation.findMany({
+  const acc = await prisma.accommodation.findUnique({
+    where: { slug },
     include: {
       locationTags: true,
       amenities: true
     }
   })
-  
-  const acc = accommodations.find((a: any) => 
-    a.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') === slug
-  )
   
   if (!acc) return { title: 'Not Found' }
   
@@ -125,28 +122,29 @@ export default async function AccommodationPage({
   params: Promise<{ slug: string }> 
 }) {
   const { slug } = await params
-  const accommodations = await prisma.accommodation.findMany({
+  const acc = await prisma.accommodation.findUnique({
+    where: { slug },
     include: {
       locationTags: true,
       amenities: true
     }
   })
   
-  const acc = accommodations.find((a: any) => 
-    a.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') === slug
-  )
-  
   if (!acc) notFound()
   
   // Find related accommodations (matching tags)
-  const relatedAccommodations = accommodations
-    .filter((a: any) => {
-      if (a.id === acc.id) return false
-      return a.locationTags.some((tag: any) => 
-        acc.locationTags.some((t: any) => t.slug === tag.slug)
-      )
-    })
-    .slice(0, 3)
+  const tagSlugs = acc.locationTags.map((t: any) => t.slug)
+  const relatedAccommodations = await prisma.accommodation.findMany({
+    where: {
+      NOT: { id: acc.id },
+      locationTags: {
+        some: {
+          slug: { in: tagSlugs }
+        }
+      }
+    },
+    take: 3
+  })
 
   // Generate image placeholders
   const images = [
