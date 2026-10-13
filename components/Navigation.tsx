@@ -10,7 +10,7 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   
   const navItems = [
-    { label: translations.nav.accommodation, href: '/#accommodation' },
+    { label: translations.nav.accommodation, href: '/smjestaj' },
     { label: translations.nav.destinations, href: '/#destinations' },
     { label: translations.nav.activities, href: '/#activities' },
     { label: translations.nav.rentCar, href: '/#rent-car' },

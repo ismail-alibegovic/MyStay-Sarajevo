@@ -11,8 +11,7 @@ import InsuranceSection from '@/components/InsuranceSection'
 import GuideSection from '@/components/GuideSection'
 import SearchDates from '@/components/SearchDates'
 
-// Force dynamic rendering to avoid database connection at build time
-export const dynamic = 'force-dynamic'
+
 
 export default async function HomePage() {
   const accommodations = await prisma.accommodation.findMany({

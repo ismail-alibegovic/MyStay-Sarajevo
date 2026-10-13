@@ -333,7 +333,7 @@ export default async function AccommodationPage({
                 {/* CTA Button */}
                 <div className="space-y-3">
                   <a
-                    href={acc.bookingComId ? buildBookingUrl(acc.bookingComId) : acc.bookingUrl}
+                    href={acc.bookingComId ? `/go/booking?page=/smjestaj/${params.slug}&acc=${acc.bookingComId}` : `/go/booking?page=/smjestaj/${params.slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     data-affiliate="booking"

@@ -91,3 +91,29 @@ model Amenity {
   updatedAt      DateTime        @updatedAt
   accommodations Accommodation[] @relation("AccommodationToAmenities")
 }
+
+model AffiliateClick {
+  id              String   @id @default(uuid())
+  partner         String   // e.g. "booking", "airalo", "kiwi", "localrent"
+  page            String   // page path where the click occurred (e.g. "/", "/smjestaj/hotel-europe")
+  accommodationId String?
+  referrer        String?
+  createdAt       DateTime @default(now())
+
+  @@index([partner])
+  @@index([createdAt])
+  @@index([accommodationId])
+}
+
+model Payout {
+  id        String   @id @default(uuid())
+  partner   String   // e.g. "booking", "airalo", "kiwi"
+  amount    Float    // Confirmed payout amount in EUR
+  date      DateTime // Date of payout or statement
+  notes     String?
+  createdAt DateTime @default(now())
+
+  @@index([partner])
+  @@index([date])
+}
+

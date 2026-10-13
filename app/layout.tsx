@@ -19,6 +19,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://mystaysarajevo.ba'),
   title: 'MyStay Sarajevo - Najbolji Smještaj u Sarajevu',
   description: 'Pronađite najbolji smještaj u Sarajevu - apartmani, hoteli i vile.',
 }

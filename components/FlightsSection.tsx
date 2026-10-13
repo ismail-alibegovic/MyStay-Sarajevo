@@ -38,7 +38,7 @@ export default function FlightsSection() {
             </ul>
 
             <a
-              href={buildFlightsUrl()}
+              href="/go/kiwi?page=/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-8 py-4 bg-luxury-gold text-white rounded-full font-bold uppercase tracking-wider text-[11px] hover:bg-luxury-gold/90 transition-colors group"

@@ -1,0 +1,46 @@
+{
+  "generatedAt": "2026-10-13T14:33:09.406Z",
+  "snowReports": [
+    {
+      "resort": "Jahorina (Poljice & Ogorjelica)",
+      "snowDepthCm": 65,
+      "openLifts": "Gondola Poljice, Šestosjed Ogorjelica, Vučnica Poljice (Otvoreno 8/12 instalacija)",
+      "weekendWeather": "Sunčano s umjerenim vjetrom, idealno za jutarnje skijanje",
+      "temperatures": "-4°C do +1°C"
+    },
+    {
+      "resort": "Bjelašnica (Babin Do)",
+      "snowDepthCm": 50,
+      "openLifts": "Šestosjed Babin Do, Četverosjed, K1 lift (Otvoreno 4/6 instalacija)",
+      "weekendWeather": "Vedro, odlična vidljivost na vrhu",
+      "temperatures": "-6°C do -1°C"
+    }
+  ],
+  "winterAccommodations": [
+    {
+      "name": "Hotel Termag Jahorina",
+      "slug": "hotel-termag-jahorina",
+      "basePrice": 240
+    },
+    {
+      "name": "Hotel Lavina Jahorina",
+      "slug": "hotel-lavina-jahorina",
+      "basePrice": 190
+    },
+    {
+      "name": "Hotel Han Bjelašnica",
+      "slug": "hotel-han-bjelasnica",
+      "basePrice": 130
+    },
+    {
+      "name": "Pino Nature Hotel Trebević",
+      "slug": "pino-nature-hotel",
+      "basePrice": 175
+    }
+  ],
+  "socialPosts": {
+    "instagram": "❄️ GDJE SKIJATI I SPAVATI OVOG VIKENDA? (Jahorina vs. Bjelašnica) 🏔️\n\nSunčan vikend je pred nama uz odlične uslove na stazama! \n🎿 Jahorina: 65 cm utabanog snijega, gondola Poljice u punom pogonu.\n⛷️ Bjelašnica: 50 cm snijega, radost za ljubitelje brzih staza u Babinom Dolu.\n\nNaše preporuke za topao i udoban boravak uz stazu:\n🔥 Hotel Termag (Jahorina) – ski-in/ski-out sa kaminom i spa bazenom\n☕ Hotel Han (Bjelašnica) – autentična atmosfera i domaća hrana u Babinom Dolu\n🌲 Pino Nature (Trebević) – 15 minuta žičarom iz grada, mir borove šume\n\n🔗 Kompletan vodič i direktne rezervacije sa provjerenim cijenama pronađite na linku u opisu profila! 👉 mystaysarajevo.ba/smjestaj\n\n#Sarajevo #Jahorina #Bjelasnica #SkiingSarajevo #VisitSarajevo #MyStaySarajevo #Zima2026",
+    "linkedIn": "Kombinacija businessa i skijanja: Zašto je Sarajevo idealna 'Bleisure' zimska destinacija? ⛷️💼\n\nSarajevo je jedan od rijetkih evropskih gradova gdje možete završiti poslovni sastanak u 14:00h, a u 15:00h već biti na osvijetljenoj olimpijskoj ski stazi Jahorine ili Bjelašnice.\n\nKljučne logističke činjenice za sezonu 2026/27:\n• Aerodrom Sarajevo (SJJ) nalazi se na samo 30-45 minuta transfera od ski centara.\n• Unaprijed rezervisani transferi eliminišu potrebu za traženjem prevoza u snježnim uslovima.\n• Smještajni kapaciteti na planinama nude visoke brzine interneta, pogodne za rad na daljinu (remote work).\n\nIstražite naš novi kurirani vodič i ponudu smještaja:\n👉 https://mystaysarajevo.ba/vodic/gdje-spavati-za-skijanje-u-sarajevu\n\n#Bleisure #Sarajevo #TourismTech #RemoteWork #AffiliateBusiness #MyStay",
+    "newsletter": "Predmet: 🎿 Tvoj zimski vodič za Sarajevo: Stanje staza i slobodne sobe za vikend\n\nPozdrav putniče,\n\nOve sedmice planine oko Sarajeva nude vrhunske uslove za otvaranje sezone!\nJahorina bilježi preko 60 cm snijega, dok Bjelašnica nudi savršenu vidljivost.\n\nIzdvojene preporuke smještaja ove sedmice:\n1. Hotel Termag Jahorina (Direktan izlaz na stazu Poljice) -> https://mystaysarajevo.ba/smjestaj/hotel-termag-jahorina\n2. Babin Do Snow Apartment (Povoljan i topao apartman na Bjelašnici) -> https://mystaysarajevo.ba/smjestaj/babin-do-snow-apartment-bjelasnica\n3. Privatni transfer sa aerodroma bez stresa -> https://mystaysarajevo.ba/go/gettransfer\n\nUživaj u zimskoj čaroliji,\nTvoj MyStay Sarajevo Autopilot"
+  }
+}

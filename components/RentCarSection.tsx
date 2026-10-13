@@ -7,7 +7,7 @@ export default function RentCarSection() {
     {
       title: translations.rentCar.searchCars,
       description: 'Pronađite savršen auto uz Localrent — lokalne agencije, transparentne cijene, bez skrivenih troškova.',
-      url: buildLocalrentUrl(),
+      url: '/go/localrent?page=/',
       icon: Car,
       gradient: 'from-amber-500 to-orange-500',
       badge: 'Popularno',
@@ -15,7 +15,7 @@ export default function RentCarSection() {
     {
       title: 'Privatni Transfer',
       description: 'Rezervišite privatni transfer od aerodroma ili između gradova uz GetTransfer.',
-      url: buildTransferUrl(),
+      url: '/go/gettransfer?page=/',
       icon: Car,
       gradient: 'from-blue-500 to-cyan-500',
       badge: null,
@@ -23,7 +23,7 @@ export default function RentCarSection() {
     {
       title: 'Taxi Transfer',
       description: 'Povoljni taxi transferi sa Kiwi Taxi — jednostavna rezervacija unaprijed.',
-      url: buildKiwitaxiUrl(),
+      url: '/go/kiwitaxi?page=/',
       icon: Car,
       gradient: 'from-violet-500 to-purple-500',
       badge: null,
@@ -31,7 +31,7 @@ export default function RentCarSection() {
     {
       title: 'Skooteri & Bicikli',
       description: 'Istražite Sarajevo na drugačiji način — iznajmite skooter ili bicikl uz Bikesbooking.',
-      url: buildBikesbookingUrl(),
+      url: '/go/bikesbooking?page=/',
       icon: Bike,
       gradient: 'from-green-500 to-teal-500',
       badge: 'Novo',

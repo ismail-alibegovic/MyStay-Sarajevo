@@ -7,7 +7,7 @@ Complete Next.js 14 App Router project for Sarajevo accommodation bookings with 
 - ✅ **Next.js 14 App Router** with SSR/SSG
 - ✅ **SEO Optimized** - Unique metadata per page, JSON-LD structured data
 - ✅ **Bosnian Language** - Full localization with `lang="bs"`
-- ✅ **Prisma + SQLite** - Database ORM with seed data
+- ✅ **Prisma + PostgreSQL (Neon)** - Database ORM with seed data
 - ✅ **Tailwind CSS** - Luxury-themed design system
 - ✅ **Framer Motion** - Smooth animations
 - ✅ **Travelpayouts Affiliate** - Rent a Car, eSIM integrations
@@ -33,7 +33,7 @@ npm run dev
 Copy `.env.example` to `.env` and fill in your values:
 
 ```env
-DATABASE_URL="file:./dev.db"
+DATABASE_URL="postgresql://user:password@ep-xxxx.eu-central-1.aws.neon.tech/neondb?sslmode=require"
 
 # Travelpayouts Affiliate Links
 LOCALRENT_AFFILIATE_URL="https://localrent.tp.st/cqRoqom7"

@@ -110,6 +110,7 @@ export default function PrivacyPolicyPage() {
                   <li>• Tehnički kolačići za funkcionalnost stranice</li>
                   <li>• Analitički kolačići (Google Analytics)</li>
                   <li>• Marketinški kolačići (Travelpayouts, Booking.com)</li>
+                  <li>• <strong>Vlastita statistika klikova:</strong> Prilikom preusmjeravanja putem /go/ rute bilježimo isključivo naziv partnera i stranicu bez IP adresa i bez ličnih podataka (potpuno anonimno).</li>
                 </ul>
               </div>
             </div>

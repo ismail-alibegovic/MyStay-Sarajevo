@@ -1,7 +1,7 @@
 import { Map, Camera, Mountain, Clock, Users, Star, ExternalLink } from 'lucide-react'
 import { buildToursUrl, buildTiqetsUrl } from '@/lib/affiliate'
 
-const WEGOTRIP_URL = 'https://wegotrip.tp.st/Co7z7fka'
+const WEGOTRIP_URL = '/go/wegotrip?page=/'
 
 const featuredTour = {
   title: 'Sarajevo: Vođena Tura po Starom Gradu',
@@ -26,14 +26,14 @@ const moreTours = [
     icon: Mountain,
     title: 'Ratni Tunel & Historija Opsade',
     description: 'Posjeta tunelu koji je spasio Sarajevo tokom opsade 1992–95.',
-    url: buildToursUrl(),
+    url: '/go/wegotrip?page=/',
     cta: 'Rezerviši na Klook',
   },
   {
     icon: Camera,
     title: 'Muzeji bez Reda',
     description: 'Ulaznice za Zemaljski muzej, Galeriju i Vijećnicu — bez čekanja.',
-    url: buildTiqetsUrl(),
+    url: '/go/tiqets?page=/',
     cta: 'Kupi na Tiqets',
   },
 ]

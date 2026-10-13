@@ -42,7 +42,7 @@ export default function ESIMSection() {
           {providers.map((provider) => (
             <a
               key={provider.name}
-              href={buildEsimUrl(provider.brand)}
+              href={`/go/${provider.brand.toLowerCase()}?page=/`}
               target="_blank"
               rel="noopener noreferrer"
               className="group relative bg-white rounded-3xl overflow-hidden border border-black/5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"

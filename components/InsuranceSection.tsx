@@ -49,7 +49,7 @@ export default function InsuranceSection() {
           {/* CTA */}
           <div className="flex-shrink-0 text-center">
             <a
-              href={buildInsuranceUrl()}
+              href="/go/compensair?page=/"
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-2 px-8 py-4 bg-luxury-ink text-white rounded-full font-bold text-[11px] uppercase tracking-wider hover:bg-luxury-gold transition-colors"

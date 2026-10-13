@@ -150,7 +150,7 @@ export default function AccommodationDetail({ accommodation }: AccommodationDeta
             </div>
             
             <a
-              href={accommodation.bookingUrl}
+              href={accommodation.bookingComId ? `/go/booking?page=/smjestaj/${accommodation.slug}&acc=${accommodation.bookingComId}` : accommodation.bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="block w-full bg-luxury-ink text-white py-6 rounded-2xl text-center text-[11px] font-black uppercase tracking-[0.2em] hover:bg-luxury-gold transition-colors"
