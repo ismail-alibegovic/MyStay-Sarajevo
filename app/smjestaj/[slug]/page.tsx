@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Star, MapPin, Wifi, Car, Coffee, Sparkles, ArrowRight, Home, ChevronRight } from 'lucide-react'
 import { translations } from '@/lib/translations'
 import { buildBookingUrl } from '@/lib/affiliate'
+import BookingCtaLink from '@/components/BookingCtaLink'
 
 // Icon mapping
 const amenityIcons: Record<string, any> = {
@@ -306,27 +307,16 @@ export default async function AccommodationPage({
 
                 {/* CTA Button */}
                 <div className="space-y-3">
-                  <a
+                  <BookingCtaLink
                     href={acc.bookingComId ? `/go/booking?page=/smjestaj/${slug}&acc=${acc.bookingComId}` : `/go/booking?page=/smjestaj/${slug}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-affiliate="booking"
-                    onClickCapture={() => {
-                      if (typeof window !== 'undefined' && (window as any).gtag) {
-                        (window as any).gtag('event', 'affiliate_click', {
-                          event_category: 'Booking',
-                          event_label: acc.name,
-                          accommodation_id: acc.id,
-                        })
-                      }
-                    }}
-                    className="block w-full bg-luxury-gold text-white px-8 py-5 rounded-2xl text-center font-bold uppercase tracking-[0.15em] hover:bg-luxury-gold/90 transition-all shadow-lg hover:shadow-xl active:scale-[0.98]"
+                    accommodationName={acc.name}
+                    accommodationId={acc.id}
                   >
                     <span className="flex items-center justify-center gap-3">
                       {translations.detail.bookNow}
                       <ArrowRight size={20} />
                     </span>
-                  </a>
+                  </BookingCtaLink>
                   <p className="text-center text-[10px] text-ink/40 uppercase tracking-widest">
                     {translations.detail.secureBooking}
                   </p>
