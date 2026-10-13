@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma'
+import { getAccommodationBySlug, getRelatedAccommodations } from '@/lib/accommodations'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Image from 'next/image'
@@ -6,9 +6,6 @@ import Link from 'next/link'
 import { Star, MapPin, Wifi, Car, Coffee, Sparkles, ArrowRight, Home, ChevronRight } from 'lucide-react'
 import { translations } from '@/lib/translations'
 import { buildBookingUrl } from '@/lib/affiliate'
-
-// Force dynamic rendering to avoid database connection at build time
-export const dynamic = 'force-dynamic'
 
 // Icon mapping
 const amenityIcons: Record<string, any> = {
@@ -26,13 +23,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }> 
 }): Promise<Metadata> {
   const { slug } = await params
-  const acc = await prisma.accommodation.findUnique({
-    where: { slug },
-    include: {
-      locationTags: true,
-      amenities: true
-    }
-  })
+  const acc = await getAccommodationBySlug(slug)
   
   if (!acc) return { title: 'Not Found' }
   
@@ -122,29 +113,12 @@ export default async function AccommodationPage({
   params: Promise<{ slug: string }> 
 }) {
   const { slug } = await params
-  const acc = await prisma.accommodation.findUnique({
-    where: { slug },
-    include: {
-      locationTags: true,
-      amenities: true
-    }
-  })
+  const acc = await getAccommodationBySlug(slug)
   
   if (!acc) notFound()
   
   // Find related accommodations (matching tags)
-  const tagSlugs = acc.locationTags.map((t: any) => t.slug)
-  const relatedAccommodations = await prisma.accommodation.findMany({
-    where: {
-      NOT: { id: acc.id },
-      locationTags: {
-        some: {
-          slug: { in: tagSlugs }
-        }
-      }
-    },
-    take: 3
-  })
+  const relatedAccommodations = await getRelatedAccommodations(acc, 3)
 
   // Generate image placeholders
   const images = [

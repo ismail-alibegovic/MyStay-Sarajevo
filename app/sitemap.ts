@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { prisma } from '@/lib/prisma'
+import { getAccommodations } from '@/lib/accommodations'
 import { getAllArticles } from '@/lib/mdx'
 
 export const revalidate = 3600
@@ -7,9 +7,7 @@ export const revalidate = 3600
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://mystaysarajevo.ba'
   
-  const accommodations = await prisma.accommodation.findMany({
-    select: { slug: true, updatedAt: true }
-  })
+  const accommodations = await getAccommodations()
   
   const articles = getAllArticles()
   

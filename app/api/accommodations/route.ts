@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { getAccommodations, type Accommodation } from '@/lib/accommodations'
 
 export async function GET(request: NextRequest) {
   try {
@@ -10,36 +10,35 @@ export async function GET(request: NextRequest) {
     const sortBy = searchParams.get('sortBy') || 'rating'
     const order = searchParams.get('order') || 'desc'
     
-    const accommodations = await prisma.accommodation.findMany({
-      where: {
-        AND: [
-          {
-            OR: [
-              { name: { contains: query } },
-              { description: { contains: query } },
-            ],
-          },
-          type ? {
-            OR: [
-              { type: type },
-              { accommodationType: { slug: type } }
-            ]
-          } : {},
-          tag ? { locationTags: { some: { slug: tag } } } : {},
-        ],
-      },
-      orderBy: [
-        { isPremium: 'desc' },
-        { [sortBy]: order === 'desc' ? 'desc' : 'asc' },
-      ],
-      include: {
-        accommodationType: true,
-        locationTags: true,
-        amenities: true,
-      },
+    let results = await getAccommodations()
+
+    if (query) {
+      const q = query.toLowerCase()
+      results = results.filter(a =>
+        a.name.toLowerCase().includes(q) || a.description.toLowerCase().includes(q)
+      )
+    }
+
+    if (type) {
+      results = results.filter(a =>
+        a.type.toLowerCase() === type.toLowerCase() ||
+        a.accommodationType?.slug.toLowerCase() === type.toLowerCase()
+      )
+    }
+
+    if (tag) {
+      results = results.filter(a =>
+        a.locationTags.some(t => t.slug === tag)
+      )
+    }
+
+    results.sort((a: any, b: any) => {
+      const aVal = a[sortBy] || 0
+      const bVal = b[sortBy] || 0
+      return order === 'desc' ? Number(bVal) - Number(aVal) : Number(aVal) - Number(bVal)
     })
     
-    return NextResponse.json(accommodations)
+    return NextResponse.json(results)
   } catch (error) {
     console.error('Search error:', error)
     return NextResponse.json(

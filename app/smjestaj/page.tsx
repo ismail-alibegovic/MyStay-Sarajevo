@@ -2,7 +2,12 @@ import { Suspense } from 'react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Home, ChevronRight, SlidersHorizontal } from 'lucide-react'
-import { prisma } from '@/lib/prisma'
+import {
+  getAccommodations,
+  getCatalogTypes,
+  getCatalogTags,
+  getCatalogAmenities,
+} from '@/lib/accommodations'
 import AccommodationListing from '@/components/AccommodationListing'
 
 export const metadata: Metadata = {
@@ -24,26 +29,10 @@ export const revalidate = 3600
 
 export default async function SmjestajPage() {
   const [accommodations, types, tags, amenities] = await Promise.all([
-    prisma.accommodation.findMany({
-      include: {
-        accommodationType: true,
-        locationTags: true,
-        amenities: true,
-      },
-      orderBy: [
-        { isPremium: 'desc' },
-        { rating: 'desc' },
-      ],
-    }),
-    prisma.accommodationType.findMany({
-      orderBy: { name: 'asc' },
-    }),
-    prisma.locationTag.findMany({
-      orderBy: { name: 'asc' },
-    }),
-    prisma.amenity.findMany({
-      orderBy: { name: 'asc' },
-    }),
+    getAccommodations(),
+    getCatalogTypes(),
+    getCatalogTags(),
+    getCatalogAmenities(),
   ])
 
   const jsonLd = {

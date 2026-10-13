@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma'
+import { getAccommodations } from '@/lib/accommodations'
 import { translations } from '@/lib/translations'
 import AccommodationGrid from '@/components/AccommodationGrid'
 import Hero from '@/components/Hero'
@@ -11,20 +11,8 @@ import InsuranceSection from '@/components/InsuranceSection'
 import GuideSection from '@/components/GuideSection'
 import SearchDates from '@/components/SearchDates'
 
-
-
 export default async function HomePage() {
-  const accommodations = await prisma.accommodation.findMany({
-    include: {
-      accommodationType: true,
-      locationTags: true,
-      amenities: true,
-    },
-    orderBy: [
-      { isPremium: 'desc' },
-      { rating: 'desc' },
-    ],
-  })
+  const accommodations = await getAccommodations()
 
   const jsonLd = {
     '@context': 'https://schema.org',
