@@ -23,8 +23,9 @@ const amenityIcons: Record<string, any> = {
 export async function generateMetadata({ 
   params 
 }: { 
-  params: { slug: string } 
+  params: Promise<{ slug: string }> 
 }): Promise<Metadata> {
+  const { slug } = await params
   const accommodations = await prisma.accommodation.findMany({
     include: {
       locationTags: true,
@@ -33,7 +34,7 @@ export async function generateMetadata({
   })
   
   const acc = accommodations.find((a: any) => 
-    a.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') === params.slug
+    a.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') === slug
   )
   
   if (!acc) return { title: 'Not Found' }
@@ -121,8 +122,9 @@ function generateBreadcrumbJsonLd(acc: any) {
 export default async function AccommodationPage({ 
   params 
 }: { 
-  params: { slug: string } 
+  params: Promise<{ slug: string }> 
 }) {
+  const { slug } = await params
   const accommodations = await prisma.accommodation.findMany({
     include: {
       locationTags: true,
@@ -131,7 +133,7 @@ export default async function AccommodationPage({
   })
   
   const acc = accommodations.find((a: any) => 
-    a.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') === params.slug
+    a.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') === slug
   )
   
   if (!acc) notFound()
@@ -333,7 +335,7 @@ export default async function AccommodationPage({
                 {/* CTA Button */}
                 <div className="space-y-3">
                   <a
-                    href={acc.bookingComId ? `/go/booking?page=/smjestaj/${params.slug}&acc=${acc.bookingComId}` : `/go/booking?page=/smjestaj/${params.slug}`}
+                    href={acc.bookingComId ? `/go/booking?page=/smjestaj/${slug}&acc=${acc.bookingComId}` : `/go/booking?page=/smjestaj/${slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     data-affiliate="booking"

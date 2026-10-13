@@ -18,9 +18,10 @@ function isBot(userAgent: string | null): boolean {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { partner: string } }
+  { params }: { params: Promise<{ partner: string }> }
 ) {
-  const partnerKey = params.partner?.toLowerCase()
+  const { partner } = await params
+  const partnerKey = partner?.toLowerCase()
   const { searchParams } = new URL(request.url)
   const page = searchParams.get('page') || '/'
   const acc = searchParams.get('acc') || null

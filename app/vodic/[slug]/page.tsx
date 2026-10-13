@@ -17,9 +17,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({ 
   params 
 }: { 
-  params: { slug: string } 
+  params: Promise<{ slug: string }> 
 }): Promise<Metadata> {
-  const article = getArticleBySlug(params.slug)
+  const { slug } = await params
+  const article = getArticleBySlug(slug)
   
   if (!article) {
     return { title: 'Not Found' }
@@ -83,18 +84,19 @@ function generateArticleJsonLd(article: any) {
   }
 }
 
-export default function ArticlePage({ 
+export default async function ArticlePage({ 
   params 
 }: { 
-  params: { slug: string } 
+  params: Promise<{ slug: string }> 
 }) {
-  const article = getArticleBySlug(params.slug)
+  const { slug } = await params
+  const article = getArticleBySlug(slug)
   
   if (!article) {
     notFound()
   }
   
-  const relatedArticles = getRelatedArticles(params.slug, 3)
+  const relatedArticles = getRelatedArticles(slug, 3)
 
   return (
     <>
