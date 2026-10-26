@@ -1,149 +1,49 @@
-# MyStay Sarajevo - Next.js 14
+# MyStay Sarajevo
 
-Complete Next.js 14 App Router project for Sarajevo accommodation bookings with SSR/SSG, SEO optimization, and Travelpayouts affiliate integration.
+**A Bosnian-language accommodation and travel guide for Sarajevo, built as an SEO-first affiliate product.** Visitors browse hotels and apartments, read local travel guides, and continue to booking, car-rental, eSIM and transfer partners through tracked links.
 
-## 🚀 Features
-
-- ✅ **Next.js 14 App Router** with SSR/SSG
-- ✅ **SEO Optimized** - Unique metadata per page, JSON-LD structured data
-- ✅ **Bosnian Language** - Full localization with `lang="bs"`
-- ✅ **Prisma + PostgreSQL (Neon)** - Database ORM with seed data
-- ✅ **Tailwind CSS** - Luxury-themed design system
-- ✅ **Framer Motion** - Smooth animations
-- ✅ **Travelpayouts Affiliate** - Rent a Car, eSIM integrations
-- ✅ **TypeScript** - Strict type safety
-
-## 📦 Installation
-
-```bash
-# Install dependencies
-npm install
-
-# Setup database
-npx prisma generate
-npx prisma db push
-npx prisma db seed
-
-# Run development server
-npm run dev
-```
-
-## 🔧 Environment Variables
-
-Copy `.env.example` to `.env` and fill in your values:
-
-```env
-DATABASE_URL="postgresql://user:password@ep-xxxx.eu-central-1.aws.neon.tech/neondb?sslmode=require"
-
-# Travelpayouts Affiliate Links
-LOCALRENT_AFFILIATE_URL="https://localrent.tp.st/cqRoqom7"
-GETRENTACAR_AFFILIATE_URL="https://getrentacar.tp.st/GoKzHnYV"
-YESIM_AFFILIATE_URL="https://yesim.tp.st/7PuGrZg2"
-AIRALO_AFFILIATE_URL="https://airalo.tp.st/86iUNaUC"
-DRIMSIM_AFFILIATE_URL="https://drimsim.tp.st/PUAc9sbZ"
-SAILY_AFFILIATE_URL="https://saily.tp.st/LKvc7wrT"
-```
-
-## 📁 Project Structure
-
-```
-mystay-sarajevo-nextjs/
-├── app/
-│   ├── layout.tsx              # Root layout with Bosnian lang, Google Fonts
-│   ├── page.tsx                # Homepage (SSG with Prisma)
-│   ├── smjestaj/
-│   │   └── [slug]/
-│   │       └── page.tsx        # Dynamic hotel pages with generateStaticParams
-│   └── api/
-│       └── accommodations/
-│           └── route.ts        # API route (replaces Express)
-├── components/
-│   ├── Navigation.tsx
-│   ├── Hero.tsx
-│   ├── AccommodationGrid.tsx
-│   ├── AccommodationDetail.tsx
-│   ├── Destinations.tsx
-│   ├── ESIMSection.tsx
-│   ├── RentCarSection.tsx
-│   ├── GuideSection.tsx
-│   └── Footer.tsx
-├── lib/
-│   ├── prisma.ts              # Prisma client singleton
-│   ├── translations.ts        # Bosnian translations
-│   └── utils.ts               # Utility functions
-├── prisma/
-│   ├── schema.prisma          # Database schema
-│   └── seed.ts                # Seed data
-└── styles/
-    └── globals.css            # Tailwind + custom styles
-```
-
-## 🎨 Design System
-
-### Colors
-```css
---luxury-bg: #FAFAF8;        /* Cream background */
---luxury-ink: #1C1C1A;       /* Dark text */
---luxury-gold: #B8860B;      /* Accent gold */
---luxury-secondary: #6B6B69; /* Muted text */
-```
-
-### Typography
-- **Playfair Display** - Serif headings
-- **Inter** - Sans-serif body text
-
-## 🔍 SEO Features
-
-### Homepage
-- JSON-LD Schema for `WebSite` with `SearchAction`
-- Open Graph + Twitter cards
-- `lang="bs"` attribute
-
-### Accommodation Pages
-- JSON-LD Schema for `LodgingBusiness`
-- Unique `title`, `description`, `og:image` per hotel
-- `generateStaticParams()` for all routes
-- ISR with 1-hour revalidation
-
-## 🌐 Deployment
-
-### Vercel (Recommended)
-```bash
-npx vercel
-```
-
-### Build for Production
-```bash
-npm run build
-npm start
-```
-
-## 📊 Database Schema
-
-### Tables
-- `Accommodation` - Hotels/apartments
-- `AccommodationType` - Hotel, Apartman, Vila, Pansion
-- `LocationTag` - Baščaršija, Trebević, Business District, Quiet Oasis
-- `Amenity` - WiFi, Parking, Doručak, Kuhinja, Teretana, Spa
-- `Review` - User reviews
-
-## 🔗 Affiliate Links
-
-All affiliate links are configurable via environment variables:
-
-| Service | Provider | Default URL |
-|---------|----------|-------------|
-| Car Rental | LocalRent | `localrent.tp.st/cqRoqom7` |
-| Airport Transfer | GetRentACar | `getrentacar.tp.st/GoKzHnYV` |
-| eSIM | Yesim | `yesim.tp.st/7PuGrZg2` |
-| eSIM | Airalo | `airalo.tp.st/86iUNaUC` |
-| eSIM | DrimSim | `drimsim.tp.st/PUAc9sbZ` |
-| eSIM | Saily | `saily.tp.st/LKvc7wrT` |
-
-## 📝 License
-
-Personal project for MyStay Sarajevo.
+**Live:** [my-stay-sarajevo.vercel.app](https://my-stay-sarajevo.vercel.app)
 
 ---
 
-Built with ❤️ in Sarajevo using Next.js 14, Prisma, and Tailwind CSS.
+## Highlights
+
+- **Static-first rendering** — every accommodation page is generated with `generateStaticParams` and refreshed with incremental static regeneration (hourly), so pages are fast and crawlable without a server round-trip per visit.
+- **Structured data and metadata per page** — `LodgingBusiness` JSON-LD for accommodations, `WebSite` with `SearchAction` on the homepage, unique titles, descriptions and Open Graph images, sitemap and robots generated by the app.
+- **Tracked, safe outbound links** — `/go/[partner]` resolves destinations from a whitelist (no open redirect), records the click with page and referrer, and filters common bots out of the analytics.
+- **Content as code** — travel guides are MDX files rendered with `next-mdx-remote`, so new articles ship through Git.
+- **Relational data model** — Prisma on PostgreSQL (Neon) with accommodations, types, amenities, location tags, reviews, affiliate clicks and payouts; a seed script provides starter data.
+- **Privacy basics** — cookie consent before analytics, privacy policy page, contact form via an API route.
+
+## Tech stack
+
+Next.js (App Router) · React · TypeScript · Prisma · PostgreSQL (Neon) · Tailwind CSS · Framer Motion · MDX (`next-mdx-remote`, `gray-matter`) · Vercel
+
+## Structure
+
+```text
+app/
+  smjestaj/[slug]/   accommodation pages (SSG + ISR)
+  vodic/[slug]/      MDX travel guides
+  go/[partner]/      whitelisted affiliate redirect with click logging
+  api/               accommodations, contact
+  sitemap.ts, robots.ts
+components/          page sections, booking widget, JSON-LD, cookie consent
+content/vodic/       guide articles (MDX)
+lib/                 Prisma client, affiliate URL builders, translations
+prisma/              schema and seed
+```
+
+## Running locally
+
+```bash
+npm install
+cp .env.example .env          # DATABASE_URL and partner links
+npx prisma db push
+npm run db:seed
+npm run dev                   # http://localhost:3000
+```
+
+## Author
+
+Built by [Ismail Alibegović](https://github.com/ismail-alibegovic) — Sarajevo, Bosnia and Herzegovina.
